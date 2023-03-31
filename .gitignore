@@ -1,0 +1,12 @@
+*
+*/**
+
+!.gitignore
+!src
+!src/**
+!example.py
+!priconne_asset_extractor.py
+!requirements.txt
+!README.md
+
+__pycache__
