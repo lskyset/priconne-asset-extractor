@@ -20,7 +20,7 @@ Yet another tool to download, extract and convert assets from Princess Connect! 
 
 ## Install
 
-- cmd `python pip install -r requirements.txt`
+- cmd `python -m pip install -r requirements.txt`
 
 ## Requires
 
