@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
+import UnityPy
 
 
 class ManifestType(Enum):
@@ -38,3 +39,6 @@ class Config:
     host = PricoHost.JP
     usmtoolkit_path = Path("usmtoolkit/UsmToolkit.exe")
     vgmstream_path = usmtoolkit_path.parent / "vgmstream" / "test.exe"
+
+
+UnityPy.config.FALLBACK_UNITY_VERSION = "2021.3.20f1"
