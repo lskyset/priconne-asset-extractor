@@ -16,15 +16,17 @@ Yet another tool to download, extract and convert assets from Princess Connect! 
   - .awb / .acb -> .wav
   - .usm -> .mp4
 
-- Reconstructs .skel from .cysp files for SD units
+- Reconstructs .skel from .cysp files for SD (playable) units (experimental)
 
 ## Install
 
+- Clone this repo or download the latest release's source code
 - cmd `python -m pip install -r requirements.txt`
+- Make sure you have usmtoolkit (see section below)
 
 ## Requires
 
-[UsmToolkit](https://github.com/Rikux3/UsmToolkit) (audio and video) : Included in the release build, if you already have UsmToolkit installed somewhere edit the paths in `src/config.py`
+[UsmToolkit](https://github.com/Rikux3/UsmToolkit) (audio and video) : Download in the release page and put it in the root folder or if you already have it somewhere edit the paths in `src/config.py` instead
 
 ## Depends on
 
