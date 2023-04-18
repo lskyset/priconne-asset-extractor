@@ -23,7 +23,6 @@ class BundleFile(Extractable):
         "script",
         "container",
         "_asset_name",
-        "_is_picklable",
     )
 
     def __init__(
@@ -37,7 +36,6 @@ class BundleFile(Extractable):
         self.script: Any = None
         self.container: str | None = None
         self._asset_name: str | None = None
-        self._is_picklable: bool = False
 
         # for Protocol
         self._name = self.name
