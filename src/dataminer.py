@@ -1,12 +1,13 @@
-import json
 import re
 from itertools import chain
 from multiprocessing import Pool
 from pathlib import Path
 from urllib.request import urlretrieve
 
-import requests
 
+from src.config import Config
+
+from . import version_finder
 from .asset_bundle import AssetBundle
 from .cysp2skel import Cysp2Skel
 from .files import BundleFile
@@ -28,7 +29,7 @@ class Dataminer:
 
     def __init__(self, *, version: int | None = None) -> None:
         if version is None:
-            version = self.get_latest_version()
+            version = version_finder.get_latest_version(Config.host)
         self._asset_manifest: AssetManifest = AssetManifest(version)
         self._sound_manifest: SoundManifest = SoundManifest(version)
         self._movie_manifest: MovieManifest = MovieManifest(version)
@@ -47,13 +48,6 @@ class Dataminer:
     @staticmethod
     def _extract_file(file: Extractable):
         file.extract()
-
-    @staticmethod
-    def get_latest_version() -> int:
-        r = requests.get("https://redive.estertion.win/last_version_jp.json")
-        latest = json.loads(r.content)
-        version = latest["TruthVersion"]
-        return int(version)
 
     @staticmethod
     def download_mdb(mdb_name="master.db") -> str:
