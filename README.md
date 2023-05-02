@@ -15,6 +15,7 @@ Yet another tool to download, extract and convert assets from Princess Connect! 
   - .unity3d -> .png / .txt
   - .awb / .acb -> .wav
   - .usm -> .mp4
+  - storydata.bytes -> .json
 
 - Reconstructs .skel from .cysp files for SD (playable) units (experimental)
 
@@ -30,7 +31,6 @@ Yet another tool to download, extract and convert assets from Princess Connect! 
 
 ## Depends on
 
-[latest TruthVersion](https://redive.estertion.win/last_version_jp.json) : `Dataminer(version=<version>)` if you want to provide the verion number yourself  
 [master.db](https://github.com/lskyset/nozomi-cb-data/blob/main/master.db)
 
 ## Basic use
@@ -52,7 +52,6 @@ For more examples see `example.py`
 ## TODO
 
 - Extract from DMM install
-- Story data extraction
 - Make the tool more user friendly
 - Add more configs
 - Remove dependecies

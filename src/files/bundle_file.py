@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, cast
 
 import UnityPy  # type: ignore[import]
+
+from src.story_deserializer import deserialize_story
 
 from ..config import BundleType, Config
 from ..protocols import Extractable
@@ -13,7 +16,6 @@ if TYPE_CHECKING:
 
 
 class BundleFile(Extractable):
-
     __slots__ = (
         "_parent_path",
         "_object",
@@ -61,6 +63,10 @@ class BundleFile(Extractable):
     def extention(self) -> str:
         if self.is_image:
             return Config().image_format
+        if self.is_text:
+            if "storydata" in self._asset_name:
+                return ".json"
+            return ".txt"
         return ""
 
     @property
@@ -112,8 +118,16 @@ class BundleFile(Extractable):
         self.image.save(self.path, lossless=True)
 
     def _extract_text(self):
-        with self.path.open("wb") as f:
-            f.write(bytes(self.script))
+        if "storydata" in self.name:
+            with self.path.open("w", encoding="utf-8") as f:
+                json.dump(
+                    deserialize_story(self.script),
+                    f,
+                    indent=4,
+                    ensure_ascii=False,
+                )
+        else:
+            self.path.write_bytes(self.script)
 
     def process_data(self) -> None:
         if self._data is None:

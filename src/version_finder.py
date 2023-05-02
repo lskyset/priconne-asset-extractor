@@ -1,9 +1,7 @@
 import json
-from urllib.error import HTTPError
-import requests
-
 from pathlib import Path
-from urllib.request import urlopen
+
+from requests_futures.sessions import FuturesSession
 
 from src.config import ManifestType, PricoHost
 
@@ -13,27 +11,23 @@ def find_version(host: PricoHost, default_version: int) -> int:
     test_multiplier = 10
     version = default_version
 
-    s = requests.session
-
-    i = 0
-    while i < max_test_amount:
-        guess = version + i * test_multiplier
-        url = f'http://{host.value}/{ManifestType.ASSET.value % (guess, "manifest_assetmanifest")}'
-        try:
-            response = urlopen(url)
-            if response.code == 200:
-                version = guess
-                i = 0
-        except HTTPError as err:
-            if err.code != 403:
-                raise err
-        i += 1
-    return version
+    s = FuturesSession()
+    while True:
+        urls = [
+            f'http://{host.value}/{ManifestType.ASSET.value % (version + (i + 1) * test_multiplier, "manifest_assetmanifest")}'
+            for i in range(max_test_amount)
+        ]
+        responses = [s.get(url) for url in urls]
+        results = [r.result().status_code == 200 for r in responses]
+        if not any(results):
+            return version
+        version += (max_test_amount - results[::-1].index(True)) * test_multiplier
 
 
 def find_version_fallback(host: PricoHost) -> int:
+    s = FuturesSession()
     if host == PricoHost.JP:
-        r = requests.get("https://redive.estertion.win/last_version_jp.json")
+        r = s.get("https://redive.estertion.win/last_version_jp.json").result()
         latest = json.loads(r.content)
     else:
         raise "could not find version"
@@ -42,7 +36,7 @@ def find_version_fallback(host: PricoHost) -> int:
 
 def get_latest_version(host: PricoHost) -> int:
     print("Finding latest version")
-    default_version = 10047000
+    default_version = 10047400
     versions = {}
     path = Path("versions.json")
     if path.exists():
@@ -51,7 +45,7 @@ def get_latest_version(host: PricoHost) -> int:
     try:
         version = find_version(host, default_version)
     except Exception as e:
-        print(e, "using fallback version finder")
+        print(e, "\nusing fallback version finder")
         version = find_version_fallback(host)
 
     versions[host.value] = version
