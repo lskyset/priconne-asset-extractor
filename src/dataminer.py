@@ -4,7 +4,6 @@ from multiprocessing import Pool
 from pathlib import Path
 from urllib.request import urlretrieve
 
-
 from src.config import Config
 
 from . import version_finder
@@ -17,7 +16,6 @@ from .protocols import Extractable
 
 
 class Dataminer:
-
     _mdb: MDB | None = None
     _cysp2skel: Cysp2Skel | None = None
 
