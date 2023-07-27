@@ -1,2 +1,2 @@
-requests-futures
-UnityPy
+requests-futures==1.0.0
+UnityPy==1.9.28

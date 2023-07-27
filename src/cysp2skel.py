@@ -108,7 +108,7 @@ class Cysp2Skel:
         return {**unit_data_dict, **enemy_data_dict}
 
     @property
-    def unit_data(self) -> dict[str, str]:
+    def unit_data(self) -> dict:
         if Cysp2Skel._unit_class_data is None:
             Cysp2Skel._unit_class_data = self.get_unit_data()
         return Cysp2Skel._unit_class_data

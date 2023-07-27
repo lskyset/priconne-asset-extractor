@@ -23,7 +23,7 @@ def examples():
     dm.datamine(
         manifest_filter="sound",
         assetbundle_filter="",
-        file_filter="bgm_M36",
+        file_filter=r"bgm_M36\.",
     )
     dm.datamine(
         manifest_filter="sound",
@@ -37,7 +37,6 @@ def examples():
     )
 
     def sd_skel_example():
-
         # 000000 files contains animations shared by all units
         dm.datamine(
             manifest_filter="spine",
