@@ -27,7 +27,7 @@ Yet another tool to download, extract and convert assets from Princess Connect! 
 
 ## Requires
 
-[UsmToolkit](https://github.com/Rikux3/UsmToolkit) (audio and video) : Download in the release page and put it in the root folder or if you already have it somewhere edit the paths in `src/config.py` instead
+[UsmToolkit](https://github.com/Rikux3/UsmToolkit) (audio and video) : Download in the release page (windows only) and put it in the root folder or if you already have it somewhere edit the paths in `src/config.py` instead. For non windows users that don't have UsmToolkit you'll have to build it yourself for your platform.
 
 ## Depends on
 
