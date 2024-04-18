@@ -15,12 +15,12 @@ class MovieManifest(AbstractManifest[MovieFile]):
             rows = f.readlines()
         files: list[MovieFile] = []
         for row in rows:
-            path, hash_, _, size, *_ = row.split(",")
+            path, _old_hash, new_hash, _, size, *_ = row.split(",")
             new_path = Path(path)
             files.append(
                 MovieFile(
                     new_path.parent / "usm" / new_path.name,
-                    hash_,
+                    new_hash,
                     int(size),
                 ),
             )

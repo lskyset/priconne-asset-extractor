@@ -27,6 +27,6 @@ class Manifest(
             rows = f.readlines()
         files = []
         for row in rows:
-            path, hash_, _, size, *_ = row.split(",")
-            files.append(AssetBundle(path, hash_, int(size)))
+            path, _old_hash, new_hash, _, size, *_ = row.split(",")
+            files.append(AssetBundle(path, new_hash, int(size)))
         return files
