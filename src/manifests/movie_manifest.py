@@ -15,7 +15,7 @@ class MovieManifest(AbstractManifest[MovieFile]):
             rows = f.readlines()
         files: list[MovieFile] = []
         for row in rows:
-            path, hash_, _, size, *_ = row.split(",")
+            path, hash_, _, evertutocom, size, *_ = row.split(",")
             new_path = Path(path)
             files.append(
                 MovieFile(
