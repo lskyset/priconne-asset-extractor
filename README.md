@@ -5,13 +5,11 @@ Yet another tool to download, extract and convert assets from Princess Connect! 
 ## Features
 
 - Downloads files from the games server with optional filters
-
   - assetbundles (.unity3d)
   - audio (.awb / .acb)
   - video (.usm)
 
 - Extracts / Converts above formats
-
   - .unity3d -> .png / .txt
   - .awb / .acb -> .wav
   - .usm -> .mp4
@@ -54,4 +52,4 @@ For more examples see `example.py`
 - Extract from DMM install
 - Make the tool more user friendly
 - Add more configs
-- Remove dependecies
+- Remove dependencies

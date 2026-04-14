@@ -53,6 +53,14 @@ class Dataminer:
             mdb_name,
         )[0]
 
+    @staticmethod
+    def disable_multiprocessing():
+        Config.disable_multiprocessing = True
+
+    @staticmethod
+    def enable_multiprocessing():
+        Config.disable_multiprocessing = False
+
     @property
     def mdb(self) -> MDB:
         if Dataminer._mdb is None:
@@ -88,23 +96,20 @@ class Dataminer:
         manifests: list[Manifest | SoundManifest | MovieManifest]
         manifests = self.get_manifests(manifest_filter)
 
-        with Pool() as p:
+        if Config.disable_multiprocessing:
             assetbundles: chain[AssetBundle] = chain(
-                *p.imap(
-                    self._pool_manifest_files,
-                    [
-                        (manifest, assetbundle_filter)
-                        for manifest in manifests
-                        if type(manifest) == Manifest
-                    ],
-                )
+                *[
+                    self._pool_manifest_files((manifest, assetbundle_filter))
+                    for manifest in manifests
+                    if type(manifest) == Manifest
+                ],
             )
 
             files: chain[Extractable] = chain(
-                *p.imap(
-                    self._pool_bundle_files,
-                    [(assetbndl, file_filter) for assetbndl in assetbundles],
-                ),
+                *[
+                    self._pool_bundle_files((assetbndl, file_filter))
+                    for assetbndl in assetbundles
+                ],
                 chain(
                     *[
                         manifest.get_files(file_filter)
@@ -114,8 +119,38 @@ class Dataminer:
                     ]
                 ),
             )
+            for file in files:
+                self._extract_file(file)
 
-            list(p.imap(self._extract_file, files))
+        else:
+            with Pool() as p:
+                assetbundles: chain[AssetBundle] = chain(
+                    *p.imap(
+                        self._pool_manifest_files,
+                        [
+                            (manifest, assetbundle_filter)
+                            for manifest in manifests
+                            if type(manifest) == Manifest
+                        ],
+                    )
+                )
+
+                files: chain[Extractable] = chain(
+                    *p.imap(
+                        self._pool_bundle_files,
+                        [(assetbndl, file_filter) for assetbndl in assetbundles],
+                    ),
+                    chain(
+                        *[
+                            manifest.get_files(file_filter)
+                            for manifest in manifests
+                            if type(manifest) == SoundManifest
+                            or type(manifest) == MovieManifest
+                        ]
+                    ),
+                )
+
+                list(p.imap(self._extract_file, files))
 
     def get_skel(self, unit_id: int):
         if (buffer := self.cysp2skel.get_skeleton_buffer(unit_id)) is None:

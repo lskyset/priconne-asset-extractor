@@ -40,6 +40,7 @@ class Config:
     host = PricoHost.JP
     usmtoolkit_path = Path("usmtoolkit/UsmToolkit.exe")
     vgmstream_path = usmtoolkit_path.parent / "vgmstream" / "test.exe"
+    disable_multiprocessing = False
 
 
 UnityPy.config.FALLBACK_UNITY_VERSION = "6000.0.58f2"

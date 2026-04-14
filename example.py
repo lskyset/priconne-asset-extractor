@@ -5,6 +5,9 @@ def examples():
     # initializes the dataminer
     dm = Dataminer()
 
+    # in case Multiprocessing doesn't work
+    # dm.disable_multiprocessing()
+
     # Extracting a whole manifest
     dm.datamine(
         manifest_filter="wac",
