@@ -1,3 +1,5 @@
+import warnings
+
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
@@ -44,3 +46,6 @@ class Config:
 
 
 UnityPy.config.FALLBACK_UNITY_VERSION = "6000.0.58f2"
+
+# disables UnityPy warnings
+warnings.filterwarnings("ignore", module="UnityPy")
