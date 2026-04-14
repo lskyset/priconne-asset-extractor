@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 
-import UnityPy
+import UnityPy.config
 
 
 class ManifestType(Enum):
@@ -42,4 +42,4 @@ class Config:
     vgmstream_path = usmtoolkit_path.parent / "vgmstream" / "test.exe"
 
 
-UnityPy.config.FALLBACK_UNITY_VERSION = "2021.3.20f1"
+UnityPy.config.FALLBACK_UNITY_VERSION = "6000.0.58f2"

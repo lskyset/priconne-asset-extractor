@@ -2,8 +2,7 @@ from pathlib import Path
 
 import UnityPy  # type: ignore[import]
 
-from src.abc.abstract_manifest_file import AbstractManifestFile
-
+from .abc.abstract_manifest_file import AbstractManifestFile
 from .config import AssetType, BundleType, Config
 from .files import BundleFile, FileContainer
 

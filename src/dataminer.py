@@ -4,10 +4,9 @@ from multiprocessing import Pool
 from pathlib import Path
 from urllib.request import urlretrieve
 
-from src.config import Config
-
 from . import version_finder
 from .asset_bundle import AssetBundle
+from .config import Config
 from .cysp2skel import Cysp2Skel
 from .files import BundleFile
 from .manifests import AssetManifest, Manifest, MovieManifest, SoundManifest

@@ -72,7 +72,7 @@ class BundleFile(Extractable):
     @property
     def name(self) -> str:
         if self._asset_name is None and self.data:
-            self._asset_name = self.data.name
+            self._asset_name = self.data.m_Name
         if self._asset_name:
             return self._asset_name + self.extention
         else:
@@ -84,7 +84,7 @@ class BundleFile(Extractable):
 
     @property
     def path(self) -> Path:
-        if self.data:
+        if self.data and hasattr(self.data, "container"):
             self.container = cast(str | None, self.data.container)
         if self.container:
             str_path = self.container.replace(
@@ -135,9 +135,10 @@ class BundleFile(Extractable):
         if self.is_image:
             self.image = self.data.image
         elif self.is_text:
-            self.script = bytes(self.data.script)
-        self._asset_name = self.data.name
-        self.container = self.data.container
+            self.script = bytes(self.data.m_Script.encode("utf-8", "surrogateescape"))
+        self._asset_name = self.data.m_Name
+        if hasattr(self.data, "container"):
+            self.container = self.data.container
         self._data = None
 
     def __getstate__(self) -> tuple[None, dict]:

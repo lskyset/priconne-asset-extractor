@@ -15,12 +15,12 @@ class SoundManifest(AbstractManifest[SoundFile]):
             rows = f.readlines()
         files: list[SoundFile] = []
         for row in rows:
-            path, hash_, _, evertutocom, size, *_ = row.split(",")
+            path, _old_hash, new_hash, _, size, *_ = row.split(",")
             new_path: Path = Path(path)
             files.append(
                 SoundFile(
                     new_path.parent / "awb" / new_path.name,
-                    hash_,
+                    new_hash,
                     int(size),
                 ),
             )
