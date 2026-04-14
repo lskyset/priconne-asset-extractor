@@ -3,7 +3,7 @@ from pathlib import Path
 
 from requests_futures.sessions import FuturesSession
 
-from src.config import ManifestType, PricoHost
+from .config import ManifestType, PricoHost
 
 
 def find_version(host: PricoHost, default_version: int) -> int:
@@ -36,7 +36,7 @@ def find_version_fallback(host: PricoHost) -> int:
 
 def get_latest_version(host: PricoHost) -> int:
     print("Finding latest version")
-    default_version = 10047400
+    default_version = 10068510
     versions = {}
     path = Path("versions.json")
     if path.exists():
