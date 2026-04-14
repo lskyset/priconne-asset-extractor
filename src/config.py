@@ -41,7 +41,7 @@ class Config:
     bundle_source: BundleSource = BundleSource.WEB
     host = PricoHost.JP
     usmtoolkit_path = Path("usmtoolkit/UsmToolkit.exe")
-    vgmstream_path = usmtoolkit_path.parent / "vgmstream" / "test.exe"
+    vgmstream_path = usmtoolkit_path.parent / "vgmstream" / "vgmstream-cli.exe"
     disable_multiprocessing = False
 
 
