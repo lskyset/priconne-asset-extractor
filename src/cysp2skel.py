@@ -105,7 +105,7 @@ class Cysp2Skel:
             for unit_id, prefab_id, motion_type in unit_enemy_data
         }
 
-        return {**unit_data_dict, **enemy_data_dict}
+        return enemy_data_dict | unit_data_dict
 
     @property
     def unit_data(self) -> dict:

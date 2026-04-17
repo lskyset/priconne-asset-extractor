@@ -67,6 +67,8 @@ class BundleFile(Extractable):
         if self.is_text:
             if "storydata" in self._asset_name:
                 return ".json"
+            if ".cysp" in self._asset_name:
+                return ""
             return ".txt"
         return ""
 
